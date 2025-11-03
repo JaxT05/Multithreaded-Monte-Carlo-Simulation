@@ -8,10 +8,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class MultithreadedSimulation {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    static final int NUM_THREADS = 4;
+
+    private static void runModel(long totalPoints) throws ExecutionException, InterruptedException {
         int NUM_THREADS = 4;
         ExecutorService es = Executors.newFixedThreadPool(NUM_THREADS);
-        long totalPoints = 100_000_000L;
 
         long totalInsideCircle = 0;
 
@@ -34,5 +35,13 @@ public class MultithreadedSimulation {
         System.out.printf("Total runtime: %.3f seconds\n", runtimeMillis / 1000.0);
 
         es.shutdown();
+    }
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        long[] pointAmounts = {1_000_000L, 100_000_000L, 10_000_000_000L};
+
+        for(long amount : pointAmounts) {
+            runModel(amount);
+        }
     }
 }

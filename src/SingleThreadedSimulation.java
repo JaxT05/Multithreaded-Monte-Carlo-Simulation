@@ -3,13 +3,12 @@ import java.time.Instant;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SingleThreadedSimulation {
-    public static void main(String[] args) {
+    private static void runModel(long totalPoints) {
         // Record the start time in milliseconds
         Instant start = Instant.now();
 
         // Total number of random points to generate
         // You can change this value to test different sample sizes
-        long totalPoints = 10_000_000_000L;
         long insideCircle = 0;
 
         // Perform the Monte Carlo simulation
@@ -37,5 +36,13 @@ public class SingleThreadedSimulation {
 
         System.out.printf("Estimated pi: %.6f\n", piEstimate);
         System.out.printf("Total runtime: %.3f seconds\n", runtimeMillis / 1000.0);
+    }
+
+    public static void main(String[] args) {
+        long[] pointAmounts = {1_000_000L, 100_000_000L, 10_000_000_000L};
+
+        for(long amount : pointAmounts) {
+            runModel(amount);
+        }
     }
 }
