@@ -8,15 +8,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class MultithreadedSimulation {
-    static final int NUM_THREADS = 4;
 
     private static void runModel(long totalPoints) throws ExecutionException, InterruptedException {
+        Instant start = Instant.now();
         int NUM_THREADS = 4;
         ExecutorService es = Executors.newFixedThreadPool(NUM_THREADS);
 
         long totalInsideCircle = 0;
 
-        Instant start = Instant.now();
         List<Future<Long>> results = new ArrayList<>();
         for (int i = 0; i < NUM_THREADS; i++) {
             results.add(es.submit(new MonteCarloCalculationTask((totalPoints / NUM_THREADS))));
